@@ -1,0 +1,6 @@
+@LicenseManagerCloud_HostAddress = http://localhost:5166
+
+GET {{LicenseManagerCloud_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
