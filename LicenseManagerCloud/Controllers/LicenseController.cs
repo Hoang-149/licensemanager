@@ -23,16 +23,16 @@ namespace LicenseManagerCloud.Controllers
         }
 
         [HttpPost("Activate")]
-        public IActionResult ActivateLicense([FromBody] string machineId)
+        public IActionResult ActivateLicense([FromBody] License request)
         {
-            var existingLicense = _licenseService.GetLicense(machineId);
+            var existingLicense = _licenseService.GetLicense(request.MachineId);
             if (existingLicense != null && existingLicense.IsActive)
             {
-                return Ok(new { Token = GenerateToken(existingLicense.MachineId, existingLicense.ExpiryDate) });
+                return Ok(new { Token = GenerateToken(request.MachineId, request.ExpiryDate) });
             }
 
-            var newLicense = _licenseService.CreateLicense(machineId);
-            return Ok(new { Token = GenerateToken(existingLicense.MachineId, existingLicense.ExpiryDate) });
+            var newLicense = _licenseService.CreateLicense(request.MachineId);
+            return Ok(new { Token = GenerateToken(newLicense.MachineId, newLicense.ExpiryDate) });
         }
 
         [HttpGet("Validate")]
@@ -52,7 +52,7 @@ namespace LicenseManagerCloud.Controllers
                 Subject = new ClaimsIdentity(new[]
                 {
                     new Claim("MachineId", machineId),
-                    new Claim("ExpiryDate", expiryDate.ToString("O"))
+                    new Claim("ExpiryTime", expiryDate.ToString("yyyy-MM-ddTHH:mm:ss"))
                 }),
                 Expires = DateTime.UtcNow.AddDays(30),
                 Issuer = _issuer,

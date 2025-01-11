@@ -1,5 +1,7 @@
 
+using LicenseManagerCloud.Data;
 using LicenseManagerCloud.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace LicenseManagerCloud
 {
@@ -8,6 +10,9 @@ namespace LicenseManagerCloud
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             // Add services to the container.
             builder.Services.AddSingleton<LicenseService>();

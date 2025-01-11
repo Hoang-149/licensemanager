@@ -1,11 +1,12 @@
 {
   "Version": 1,
-  "Hash": "glaigCFTwjxpgLC7rRwBLT32DuS050EDMyRNI8154dA=",
+  "Hash": "ayOpfVRrl8Ya2+dsnDf4S0oxXQrXFOI20dTRPkBY8Ks=",
   "Source": "LicenseManagerCloud",
   "BasePath": "_content/LicenseManagerCloud",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": []
+  "Assets": [],
+  "Endpoints": []
 }

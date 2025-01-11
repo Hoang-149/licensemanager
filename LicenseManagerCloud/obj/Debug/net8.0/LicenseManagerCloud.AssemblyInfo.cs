@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LicenseManagerCloud")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+01771f632fcc529d770bac5bd97a70677a2835ac")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+be0910c479a04a9c791415e9a9bfef9a51803dfb")]
 [assembly: System.Reflection.AssemblyProductAttribute("LicenseManagerCloud")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LicenseManagerCloud")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
