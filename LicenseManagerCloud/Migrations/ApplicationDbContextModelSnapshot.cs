@@ -22,23 +22,33 @@ namespace LicenseManagerCloud.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("LicenseManagerCloud.License", b =>
+            modelBuilder.Entity("LicenseManagerCloud.Models.Lincense", b =>
                 {
-                    b.Property<Guid>("LicenseId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("ExpiryDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
+                    b.Property<string>("LicenseKey")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("MachineId")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("LicenseId");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Licenses");
                 });

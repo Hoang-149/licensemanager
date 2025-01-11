@@ -1,9 +1,6 @@
-﻿using LicenseManagerCloud.Services;
+﻿using LicenseManagerCloud.Models;
+using LicenseManagerCloud.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Security.Cryptography;
 
 namespace LicenseManagerCloud.Controllers
 {
@@ -11,65 +8,79 @@ namespace LicenseManagerCloud.Controllers
     [Route("api/[controller]")]
     public class LicenseController : ControllerBase
     {
-        private readonly LicenseService _licenseService;
+        //private readonly ApplicationDbContext _context;
+        private readonly ILicenseService _licenseService;
 
-        private readonly string privatePem = System.IO.File.ReadAllText("private_key.pem");
-        private readonly string _issuer = "licensemanagerapiapp";
-        private readonly string _audience = "licensemanagerapi";
-
-        public LicenseController(LicenseService licenseService)
+        public LicenseController(ILicenseService license)
         {
-            _licenseService = licenseService;
+            _licenseService = license;
         }
 
-        [HttpPost("Activate")]
-        public IActionResult ActivateLicense([FromBody] License request)
+        [HttpPost("Create")]
+        public async Task<IActionResult> CreateLicense([FromBody] Lincense request)
         {
-            var existingLicense = _licenseService.GetLicense(request.MachineId);
-            if (existingLicense != null && existingLicense.IsActive)
+            if (string.IsNullOrEmpty(request.LicenseKey) || string.IsNullOrEmpty(request.MachineId))
             {
-                return Ok(new { Token = GenerateToken(request.MachineId, request.ExpiryDate) });
+                return BadRequest("LicenseKey and MachineId are required.");
             }
 
-            var newLicense = _licenseService.CreateLicense(request.MachineId);
-            return Ok(new { Token = GenerateToken(newLicense.MachineId, newLicense.ExpiryDate) });
+            var existLicenseKey = await _licenseService.GetLicenseByMachineIdAsync(request.MachineId);
+            if (existLicenseKey != null)
+            {
+                return Conflict("A license for this machine already exists.");
+            }
+
+            var license = await _licenseService.CreateLicenseAsync(
+            request.LicenseKey,
+            request.MachineId,
+            request.Status ?? "Enable",
+            request.ExpiryDate);
+
+            return CreatedAtAction(nameof(GetLicense), new { id = license.Id }, license);
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetLicense(int id)
+        {
+            var license = await _licenseService.GetLicenseByMachineIdAsync(id.ToString());
+            if (license == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(license);
+        }
+
+        [HttpPost("GetToken")]
+        public async Task<IActionResult> GetToken([FromBody] Lincense request)
+        {
+            var token = await _licenseService.GetTokenByLicenseAsync(request.LicenseKey);
+
+            if (token == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(token);
+        }
+
+        //[HttpPost("Activate")]
+        //public IActionResult ActivateLicense([FromBody] Lincense request)
+        //{
+        //    var existingLicense = _licenseService.GetLicense(request.MachineId);
+        //    if (existingLicense != null && existingLicense.Status == "Enable")
+        //    {
+        //        return Ok(new { Token = GenerateToken(request.MachineId, request.ExpiryDate) });
+        //    }
+
+        //    var newLicense = _licenseService.CreateLicense(request.MachineId);
+        //    return Ok(new { Token = GenerateToken(newLicense.MachineId, newLicense.ExpiryDate) });
+        //}
 
         [HttpGet("Validate")]
         public IActionResult ValidateLicense()
         {
             return Ok(new { Message = "Token is valid" });
-        }
-
-        private string GenerateToken(string machineId, DateTime expiryDate)
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var rsa = GetRsaPrivateKey();
-            var key = new RsaSecurityKey(rsa);
-
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new[]
-                {
-                    new Claim("MachineId", machineId),
-                    new Claim("ExpiryTime", expiryDate.ToString("yyyy-MM-ddTHH:mm:ss"))
-                }),
-                Expires = DateTime.UtcNow.AddDays(30),
-                Issuer = _issuer,
-                Audience = _audience,
-                SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.RsaSha256)
-            };
-
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
-        }
-
-        private RSA GetRsaPrivateKey()
-        {
-            RSA rSA = RSA.Create();
-            rSA.ImportFromEncryptedPem(privatePem.ToString(), "thang");
-
-            return rSA;
         }
     }
 

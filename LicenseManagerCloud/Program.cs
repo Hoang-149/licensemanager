@@ -15,7 +15,7 @@ namespace LicenseManagerCloud
                 options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             // Add services to the container.
-            builder.Services.AddSingleton<LicenseService>();
+            builder.Services.AddScoped<ILicenseService, LicenseService>();
 
 
             builder.Services.AddControllers();

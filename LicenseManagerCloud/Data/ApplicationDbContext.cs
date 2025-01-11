@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using LicenseManagerCloud.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace LicenseManagerCloud.Data
 {
@@ -7,6 +8,6 @@ namespace LicenseManagerCloud.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options) { }
 
-        public DbSet<License> Licenses { get; set; }
+        public DbSet<Lincense> Licenses { get; set; }
     }
 }

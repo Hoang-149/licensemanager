@@ -36,7 +36,6 @@ D:\Works\C#\LicenseManagerCloud\LicenseManagerCloud\obj\Debug\net8.0\LicenseMana
 D:\Works\C#\LicenseManagerCloud\LicenseManagerCloud\obj\Debug\net8.0\LicenseManagerCloud.genruntimeconfig.cache
 D:\Works\C#\LicenseManagerCloud\LicenseManagerCloud\obj\Debug\net8.0\ref\LicenseManagerCloud.dll
 D:\Works\C#\LicenseManagerCloud\LicenseManagerCloud\obj\Debug\net8.0\LicenseManagerCloud.sourcelink.json
-D:\Works\C#\LicenseManagerCloud\LicenseManagerCloud\bin\Debug\net8.0\LicenseManagerCloud.staticwebassets.endpoints.json
 D:\Works\C#\LicenseManagerCloud\LicenseManagerCloud\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
 D:\Works\C#\LicenseManagerCloud\LicenseManagerCloud\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
 D:\Works\C#\LicenseManagerCloud\LicenseManagerCloud\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Relational.dll
@@ -52,8 +51,6 @@ D:\Works\C#\LicenseManagerCloud\LicenseManagerCloud\bin\Debug\net8.0\Microsoft.E
 D:\Works\C#\LicenseManagerCloud\LicenseManagerCloud\bin\Debug\net8.0\Npgsql.dll
 D:\Works\C#\LicenseManagerCloud\LicenseManagerCloud\bin\Debug\net8.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 D:\Works\C#\LicenseManagerCloud\LicenseManagerCloud\bin\Debug\net8.0\System.Diagnostics.DiagnosticSource.dll
-D:\Works\C#\LicenseManagerCloud\LicenseManagerCloud\obj\Debug\net8.0\staticwebassets.build.endpoints.json
-D:\Works\C#\LicenseManagerCloud\LicenseManagerCloud\obj\Debug\net8.0\staticwebassets\msbuild.LicenseManagerCloud.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
 D:\Works\C#\LicenseManagerCloud\LicenseManagerCloud\bin\Debug\net8.0\Humanizer.dll
 D:\Works\C#\LicenseManagerCloud\LicenseManagerCloud\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
 D:\Works\C#\LicenseManagerCloud\LicenseManagerCloud\bin\Debug\net8.0\Microsoft.Build.Locator.dll
